@@ -1,5 +1,9 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
+const ModuleFederationPlugin =
+	require('webpack').container.ModuleFederationPlugin
+const deps = require('../package.json').dependencies
+//
 // const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
@@ -33,12 +37,35 @@ module.exports = {
 		],
 	},
 	output: {
-		path: path.resolve(__dirname, '..', './build'),
-		filename: 'bundle.js',
+		publicPath: 'http://localhost:3002/',
 	},
 	plugins: [
 		new HTMLWebpackPlugin({
 			template: path.resolve(__dirname, '..', './src/index.html'),
+		}),
+		new ModuleFederationPlugin({
+			name: 'currency',
+			filename: 'currency.js',
+			remotes: {
+				base: 'base@http://localhost:3001/base.js',
+			},
+			exposes: {
+				'./Exchange': './src/Test.tsx',
+			},
+			shared: {
+				react: {
+					singleton: true,
+					requiredVersion: deps.react,
+				},
+				'react-dom': {
+					singleton: true,
+					requiredVersion: deps['react-dom'],
+				},
+				'styled-components': {
+					singleton: true,
+					requiredVersion: deps['styled-components'],
+				},
+			},
 		}),
 		// new CopyPlugin({
 		// 	patterns: [{ from: '../src', to: '/build' }],
