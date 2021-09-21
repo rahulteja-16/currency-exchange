@@ -50,7 +50,7 @@ module.exports = {
 				base: 'base@http://localhost:3001/base.js',
 			},
 			exposes: {
-				'./Exchange': './src/Test.tsx',
+				'./Exchange': './src/Root.tsx',
 			},
 			shared: {
 				react: {
