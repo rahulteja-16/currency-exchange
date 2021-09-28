@@ -41,7 +41,7 @@ const getWPConfig = (env) => {
 			publicPath:
 				env === 'dev'
 					? 'http://localhost:3002/'
-					: 'https://currency.rahulteja.dev',
+					: 'https://currency.rahulteja.dev/',
 		},
 		plugins: [
 			new HTMLWebpackPlugin({
