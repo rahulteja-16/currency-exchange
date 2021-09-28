@@ -7,10 +7,12 @@ const GlobalStyles = React.lazy(() => import('base/GlobalStyles'))
 
 const CurrencyConverter = () => {
 	return (
-		<ThemeProvider>
-			<GlobalStyles />
-			<Container />
-		</ThemeProvider>
+		<React.Suspense fallback="Loading..">
+			<ThemeProvider>
+				<GlobalStyles />
+				<Container />
+			</ThemeProvider>
+		</React.Suspense>
 	)
 }
 
