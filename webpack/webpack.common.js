@@ -51,10 +51,10 @@ const getWPConfig = (env) => {
 				name: 'currency',
 				filename: 'currency.js',
 				remotes: {
-					base:
+					shared:
 						env === 'dev'
-							? 'base@http://localhost:3001/base.js'
-							: 'base@https://rahulteja.dev/base.js',
+							? 'shared@http://localhost:3004/shared.js'
+							: 'shared@https://shared.rahulteja.dev/shared.js',
 				},
 				exposes: {
 					'./Exchange': './src/Root.tsx',

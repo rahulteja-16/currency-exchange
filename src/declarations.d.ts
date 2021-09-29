@@ -3,4 +3,4 @@ declare module '*.svg' {
 	const content: string
 	export default content
 }
-declare module 'base/*'
+declare module 'shared/*'
