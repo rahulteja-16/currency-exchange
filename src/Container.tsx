@@ -1,22 +1,24 @@
-import { useEffect, useMemo } from 'react'
+/* eslint-disable import/no-unresolved */
+import React, { useEffect, useMemo } from 'react'
+import styled from 'styled-components'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { Exchange, ReqHeaders } from './types'
 
-import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import { API } from './constants'
 
 import CurrencyItem from './components/CurrencyItem'
-import Button from './components/Button'
 
 import { getCountries } from './redux/slices/countriesSlice'
 import { setDate, updateDate } from './redux/slices/dateSlice'
 import { addExchange, initialExchange } from './redux/slices/exchangeSlice'
 import { RootState } from './redux/store'
-import { Loader } from './styles/Loader'
-import DatePicker from './components/DatePicker'
+
+const Button = React.lazy(() => import('shared/Button'))
+const DatePicker = React.lazy(() => import('shared/DatePicker'))
 
 const PositionWrapper = styled.div`
 	margin: 0 auto;
@@ -74,8 +76,7 @@ const Container = () => {
 	const onButtonPress = () => dispatch(addExchange())
 
 	return (
-		<>
-			{/* <Header /> */}
+		<React.Suspense fallback="Loading...">
 			<PositionWrapper>
 				<DatePicker date={date} onUpdateDate={onUpdateDate} />
 				{exchangeArr && exchangeArr.length > 0 && (
@@ -93,9 +94,9 @@ const Container = () => {
 						</ButtonPosition>
 					</>
 				)}
-				{exchangeArr && exchangeArr.length === 0 && <Loader />}
+				{exchangeArr && exchangeArr.length === 0 && <div>Loading...</div>}
 			</PositionWrapper>
-		</>
+		</React.Suspense>
 	)
 }
 
