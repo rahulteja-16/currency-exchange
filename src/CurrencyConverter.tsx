@@ -2,15 +2,17 @@
 import React from 'react'
 import Container from './Container'
 
-const ThemeProvider = React.lazy(() => import('base/ThemeProvider'))
-const GlobalStyles = React.lazy(() => import('base/GlobalStyles'))
+const ThemeProvider = React.lazy(() => import('shared/ThemeProvider'))
+const GlobalStyles = React.lazy(() => import('shared/GlobalStyles'))
 
 const CurrencyConverter = () => {
 	return (
-		<ThemeProvider>
-			<GlobalStyles />
-			<Container />
-		</ThemeProvider>
+		<React.Suspense fallback="Loading..">
+			<ThemeProvider>
+				<GlobalStyles />
+				<Container />
+			</ThemeProvider>
+		</React.Suspense>
 	)
 }
 
