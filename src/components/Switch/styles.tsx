@@ -10,13 +10,13 @@ const spin = keyframes`
 `
 
 export const Exchange = styled.div`
-    height: 65px;
-    width: 65px;
-    margin-top: 16px;
-    position: relative;
-    border-radius: 50%;
-    border: 1px solid :${({ theme }) => theme.colors.text};
-    background-color: ${({ theme }) => theme.colors.text};
+	height: 65px;
+	width: 65px;
+	margin-top: 16px;
+	position: relative;
+	border-radius: 50%;
+	border: 1px solid var(--blue-base);
+	background-color: var(--blue-base);
 `
 
 export const ExchangeButton = styled.div`
@@ -26,9 +26,9 @@ export const ExchangeButton = styled.div`
 	left: 12px;
 	top: 12px;
 	bottom: 12px;
-	background-color: ${({ theme }) => theme.colors.info};
+	background-color: var(--bg-blue);
 	&:hover {
-		box-shadow: 0px 0px 6px 1px ${({ theme }) => theme.colors.border};
+		box-shadow: 0px 0px 1px 1px var(--bg-blue);
 		animation: ${spin} 1s ease-in 0s 1 normal;
 	}
 `
@@ -48,5 +48,5 @@ export const Icon = styled.div`
 	left: 14px;
 	bottom: 14px;
 	right: 14px;
-	color: ${({ theme }) => theme.colors.text};
+	color: var(--blue-base);
 `
