@@ -1,17 +1,20 @@
 /* eslint-disable import/no-unresolved */
+// import React, { useEffect } from 'react'
 import React from 'react'
 import Container from './Container'
 
-const ThemeProvider = React.lazy(() => import('shared/ThemeProvider'))
 const GlobalStyles = React.lazy(() => import('shared/GlobalStyles'))
 
 const CurrencyConverter = () => {
+	// for development
+	// useEffect(() => {
+	// 	document.body.dataset.theme = 'light'
+	// }, [])
+
 	return (
 		<React.Suspense fallback="Loading..">
-			<ThemeProvider>
-				<GlobalStyles />
-				<Container />
-			</ThemeProvider>
+			<GlobalStyles />
+			<Container />
 		</React.Suspense>
 	)
 }

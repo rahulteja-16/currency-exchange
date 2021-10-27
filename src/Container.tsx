@@ -23,24 +23,25 @@ const DatePicker = React.lazy(() => import('shared/DatePicker'))
 const PositionWrapper = styled.div`
 	margin: 0 auto;
 	max-width: 1680px;
-	padding: ${({ theme }) => theme.paddings.xsm};
+	padding: 8px;
 `
 
 const ButtonPosition = styled.div`
 	display: flex;
 	flex-flow: row-reverse;
-	margin-right: ${({ theme }) => theme.paddings.sm};
+	margin-right: 16px;
 `
 
 const ButtonItem = styled.div`
-	color: ${({ theme }) => theme.colors.background};
+	color: var(--text-400);
 	cursor: pointer;
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
+	padding: 10px;
 `
 
 const ButtonText = styled.span`
-	padding-left: ${({ theme }) => theme.paddings.xsm};
+	padding-left: 8px;
 `
 
 const Container = () => {
