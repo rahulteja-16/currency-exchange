@@ -45,6 +45,7 @@ const ButtonText = styled.span`
 `
 
 const Container = () => {
+	const dispatch = useDispatch()
 	const exchangeArr = useSelector(
 		(state: RootState) => state.exchanges.exchanges
 	)
@@ -62,7 +63,7 @@ const Container = () => {
 		}),
 		[]
 	)
-	const dispatch = useDispatch()
+
 	useEffect(() => {
 		dispatch(getCountries(headers))
 		dispatch(setDate())
@@ -89,9 +90,9 @@ const Container = () => {
 	return (
 		<React.Suspense fallback="Loading...">
 			<PositionWrapper>
-				<DatePicker date={date} onUpdateDate={onUpdateDate} />
 				{exchangeArr && exchangeArr.length > 0 && (
 					<>
+						<DatePicker date={date} onUpdateDate={onUpdateDate} />
 						{exchangeArr.map((item: Exchange) => {
 							return (
 								<CurrencyItem

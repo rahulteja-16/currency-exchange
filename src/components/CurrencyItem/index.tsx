@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 import { useDispatch } from 'react-redux'
 import { StaticText } from '../../constants'
+import { getConvertedAmount } from '../../helpers/conversion'
 import { updateExchange } from '../../redux/slices/exchangeSlice'
 import { Country, Exchange, RateItem } from '../../types'
 import Switch from '../Switch'
@@ -33,29 +34,11 @@ const CurrencyItem = ({
 		(item) => item.code !== exchangeItem.selectedToCurrency
 	)
 
-	const updateAmount = (
-		e: React.ChangeEvent<HTMLInputElement>,
-		type: SwitchStatus
-	) => {
-		const obj: Exchange = { ...exchangeItem }
-		if (type === SwitchStatus.FROM) {
-			obj.selectedFromAmount = +e.target.value
-			const baseRates = rates.filter(
-				(base) => base.currency === obj.selectedFromCurrency
-			)
-			if (baseRates.length > 0) {
-				const currencyBase = baseRates[0].amount
-				const inEuros = obj.selectedFromAmount / currencyBase
-				const toRates = rates.filter(
-					(rates) => rates.currency === obj.selectedToCurrency
-				)
-				const res = inEuros * toRates[0].amount
-				obj.selectedToAmount = Number(res.toFixed(2))
-			}
-		} else if (type === SwitchStatus.TO) {
-			obj.selectedToAmount = +e.target.value
-		}
-		console.log(obj)
+	const updateAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const obj: Exchange = getConvertedAmount(rates, {
+			...exchangeItem,
+			selectedFromAmount: +e.target.value,
+		})
 		dispatch(updateExchange(obj))
 	}
 
@@ -63,15 +46,21 @@ const CurrencyItem = ({
 		e: React.ChangeEvent<HTMLInputElement>,
 		type: SwitchStatus
 	) => {
-		const obj: Exchange = { ...exchangeItem }
 		if (type === SwitchStatus.FROM) {
+			const obj: Exchange = getConvertedAmount(rates, {
+				...exchangeItem,
+				selectedFromCurrency: e.target.value,
+			})
 			obj.id = `${e.target.value}-${obj.selectedToCurrency}-${obj.index}`
-			obj.selectedFromCurrency = e.target.value
+			dispatch(updateExchange(obj))
 		} else if (type === SwitchStatus.TO) {
-			obj.id = `${obj.selectedFromAmount}-${e.target.value}-${obj.index}`
-			obj.selectedToCurrency = e.target.value
+			const obj: Exchange = getConvertedAmount(rates, {
+				...exchangeItem,
+				selectedToCurrency: e.target.value,
+			})
+			obj.id = `${obj.selectedFromCurrency}-${e.target.value}-${obj.index}`
+			dispatch(updateExchange(obj))
 		}
-		dispatch(updateExchange(obj))
 	}
 
 	return (
@@ -92,7 +81,7 @@ const CurrencyItem = ({
 						type="number"
 						min="0"
 						value={exchangeItem.selectedFromAmount}
-						onChange={(e) => updateAmount(e, SwitchStatus.FROM)}
+						onChange={updateAmount}
 					/>
 				</ItemWrapper>
 				<Switch />
@@ -111,7 +100,7 @@ const CurrencyItem = ({
 						type="number"
 						min="0"
 						value={exchangeItem.selectedToAmount}
-						onChange={(e) => updateAmount(e, SwitchStatus.TO)}
+						onChange={updateAmount}
 						disabled
 					/>
 				</ItemWrapper>
