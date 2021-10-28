@@ -36,14 +36,16 @@ const CurrencyItem = ({
 		SetToAmount(+e.target.value)
 	}
 
+	const updateFromCurrency = (e: React.ChangeEvent<HTMLInputElement>) => {
+		console.log(e.target.value)
+	}
+
 	return (
 		<React.Suspense fallback="Loading...">
 			<SectionWrapper>
 				<ItemWrapper>
 					<DropDown
-						onSelect={() => {
-							console.log('test')
-						}}
+						onSelect={updateFromCurrency}
 						selectedValue={exchangeItem.selectedFromCurrency}
 						items={toCountries}
 						keyValue={exchangeItem.selectedFromCurrency}

@@ -1,15 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import fetchApi from '../../helpers/fetchApi'
-import { Country, ReqHeaders } from '../../types'
+import { Country, RateItem, ReqHeaders } from '../../types'
 
 interface CountryType {
 	countriesArr: Country[]
 	symbols: string[]
+	rates: RateItem[]
 }
 
 const initialState: CountryType = {
 	countriesArr: [],
 	symbols: [],
+	rates: [],
 }
 
 export const getCountries = createAsyncThunk(
@@ -17,10 +19,9 @@ export const getCountries = createAsyncThunk(
 	async (reqObj: ReqHeaders) => {
 		const response = await fetchApi(reqObj)
 		const countriesArr: Country[] = []
-		const symbols: any = []
+		const symbols: string[] = []
 		response.forEach((item: any) => {
 			if (item.active) {
-				console.log()
 				symbols.push(item.code)
 				const obj: Country = {
 					active: item.active,
@@ -34,7 +35,24 @@ export const getCountries = createAsyncThunk(
 				countriesArr.push(obj)
 			}
 		})
+
 		return { symbols, countriesArr }
+	}
+)
+
+export const getRates = createAsyncThunk(
+	'rates/get',
+	async (reqObj: ReqHeaders) => {
+		const conversionRates: RateItem[] = []
+		const ratesResponse = await fetchApi(reqObj)
+		ratesResponse.forEach((rateItem: any) => {
+			const obj = {
+				currency: rateItem.quote_currency,
+				amount: rateItem.quote,
+			}
+			conversionRates.push(obj)
+		})
+		return { conversionRates }
 	}
 )
 
@@ -43,16 +61,16 @@ export const countriesSlice = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
-		// builder.addCase(getCountries.pending, (state, action) => {})
 		builder.addCase(getCountries.fulfilled, (state, actions) => {
 			const { countriesArr, symbols } = actions.payload
 			state.countriesArr = countriesArr
 			state.symbols = symbols
-		})
-		// builder.addCase(getCountries.rejected, (state, action) => {})
+		}),
+			builder.addCase(getRates.fulfilled, (state, actions) => {
+				const { conversionRates } = actions.payload
+				state.rates = conversionRates
+			})
 	},
 })
-
-// export const { increment, decrement, incrementByAmount } = currencySlice.actions
 
 export default countriesSlice.reducer

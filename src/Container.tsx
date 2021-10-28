@@ -8,11 +8,11 @@ import { Exchange, ReqHeaders } from './types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-import { API } from './constants'
+import { API, StaticText } from './constants'
 
 import CurrencyItem from './components/CurrencyItem'
 
-import { getCountries } from './redux/slices/countriesSlice'
+import { getCountries, getRates } from './redux/slices/countriesSlice'
 import { setDate, updateDate } from './redux/slices/dateSlice'
 import { addExchange, initialExchange } from './redux/slices/exchangeSlice'
 import { RootState } from './redux/store'
@@ -49,7 +49,7 @@ const Container = () => {
 		(state: RootState) => state.exchanges.exchanges
 	)
 	const countries = useSelector((state: RootState) => state.countries)
-	const { countriesArr } = countries
+	const { countriesArr, symbols } = countries
 	const date = useSelector((state: RootState) => state.date.date)
 	const headers = useMemo(
 		(): ReqHeaders => ({
@@ -71,6 +71,16 @@ const Container = () => {
 		dispatch(setDate())
 		dispatch(initialExchange())
 	}, [dispatch, headers])
+
+	useEffect(() => {
+		const rateHeaders = { ...headers }
+		rateHeaders.url = `${API.RATES_URL}&base_currency=${
+			StaticText.BASE_CUR
+		}&quote_currencies=${symbols.join()}`
+		if (symbols.length > 0) {
+			dispatch(getRates(rateHeaders))
+		}
+	}, [dispatch, headers, symbols])
 
 	const onUpdateDate = (e: React.FormEvent<HTMLInputElement>) => {
 		dispatch(updateDate(e.currentTarget.value))
