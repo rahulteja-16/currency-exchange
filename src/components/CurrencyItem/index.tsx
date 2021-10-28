@@ -1,6 +1,8 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
+import { useDispatch } from 'react-redux'
 import { StaticText } from '../../constants'
-import { Country, Exchange } from '../../types'
+import { updateExchange } from '../../redux/slices/exchangeSlice'
+import { Country, Exchange, RateItem } from '../../types'
 import Switch from '../Switch'
 import { InputWrapper, ItemWrapper, SectionWrapper } from './styles'
 
@@ -10,34 +12,66 @@ const DropDown = React.lazy(() => import('shared/DropDown'))
 declare interface CurrencyItemProps {
 	countriesArr: Country[]
 	exchangeItem: Exchange
+	rates: RateItem[]
+}
+
+enum SwitchStatus {
+	FROM,
+	TO,
 }
 
 const CurrencyItem = ({
 	countriesArr,
 	exchangeItem,
+	rates,
 }: CurrencyItemProps): ReactElement => {
+	const dispatch = useDispatch()
 	const fromCountries = [...countriesArr].filter(
 		(item) => item.code !== exchangeItem.selectedFromCurrency
 	)
 	const toCountries = [...countriesArr].filter(
 		(item) => item.code !== exchangeItem.selectedToCurrency
 	)
-	const [fromAmount, SetFromAmount] = useState<number>(
-		exchangeItem.selectedFromAmount
-	)
-	const [toAmount, SetToAmount] = useState<number>(
-		exchangeItem.selectedToAmount
-	)
 
-	const updateFromAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-		SetFromAmount(+e.target.value)
-	}
-	const updateToAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-		SetToAmount(+e.target.value)
+	const updateAmount = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		type: SwitchStatus
+	) => {
+		const obj: Exchange = { ...exchangeItem }
+		if (type === SwitchStatus.FROM) {
+			obj.selectedFromAmount = +e.target.value
+			const baseRates = rates.filter(
+				(base) => base.currency === obj.selectedFromCurrency
+			)
+			if (baseRates.length > 0) {
+				const currencyBase = baseRates[0].amount
+				const inEuros = obj.selectedFromAmount / currencyBase
+				const toRates = rates.filter(
+					(rates) => rates.currency === obj.selectedToCurrency
+				)
+				const res = inEuros * toRates[0].amount
+				obj.selectedToAmount = Number(res.toFixed(2))
+			}
+		} else if (type === SwitchStatus.TO) {
+			obj.selectedToAmount = +e.target.value
+		}
+		console.log(obj)
+		dispatch(updateExchange(obj))
 	}
 
-	const updateFromCurrency = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target.value)
+	const updateCountry = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		type: SwitchStatus
+	) => {
+		const obj: Exchange = { ...exchangeItem }
+		if (type === SwitchStatus.FROM) {
+			obj.id = `${e.target.value}-${obj.selectedToCurrency}-${obj.index}`
+			obj.selectedFromCurrency = e.target.value
+		} else if (type === SwitchStatus.TO) {
+			obj.id = `${obj.selectedFromAmount}-${e.target.value}-${obj.index}`
+			obj.selectedToCurrency = e.target.value
+		}
+		dispatch(updateExchange(obj))
 	}
 
 	return (
@@ -45,7 +79,9 @@ const CurrencyItem = ({
 			<SectionWrapper>
 				<ItemWrapper>
 					<DropDown
-						onSelect={updateFromCurrency}
+						onSelect={(e: React.ChangeEvent<HTMLInputElement>) =>
+							updateCountry(e, SwitchStatus.FROM)
+						}
 						selectedValue={exchangeItem.selectedFromCurrency}
 						items={toCountries}
 						keyValue={exchangeItem.selectedFromCurrency}
@@ -55,16 +91,16 @@ const CurrencyItem = ({
 					<InputWrapper
 						type="number"
 						min="0"
-						value={fromAmount}
-						onChange={updateFromAmount}
+						value={exchangeItem.selectedFromAmount}
+						onChange={(e) => updateAmount(e, SwitchStatus.FROM)}
 					/>
 				</ItemWrapper>
 				<Switch />
 				<ItemWrapper>
 					<DropDown
-						onSelect={() => {
-							console.log('test')
-						}}
+						onSelect={(e: React.ChangeEvent<HTMLInputElement>) =>
+							updateCountry(e, SwitchStatus.TO)
+						}
 						selectedValue={exchangeItem.selectedToCurrency}
 						items={fromCountries}
 						keyValue={exchangeItem.selectedFromCurrency}
@@ -74,8 +110,9 @@ const CurrencyItem = ({
 					<InputWrapper
 						type="number"
 						min="0"
-						value={toAmount}
-						onChange={updateToAmount}
+						value={exchangeItem.selectedToAmount}
+						onChange={(e) => updateAmount(e, SwitchStatus.TO)}
+						disabled
 					/>
 				</ItemWrapper>
 			</SectionWrapper>
