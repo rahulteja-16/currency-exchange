@@ -90,9 +90,9 @@ const Container = () => {
 	return (
 		<React.Suspense fallback="Loading...">
 			<PositionWrapper>
-				<DatePicker date={date} onUpdateDate={onUpdateDate} />
 				{exchangeArr && exchangeArr.length > 0 && (
 					<>
+						<DatePicker date={date} onUpdateDate={onUpdateDate} />
 						{exchangeArr.map((item: Exchange) => {
 							return (
 								<CurrencyItem
