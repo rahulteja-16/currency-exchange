@@ -25,6 +25,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.15",
     "@reduxjs/toolkit": "^1.6.1",
+    "@types/node": "^16.11.6",
     "@types/react-router-dom": "^5.1.9",
     "@types/styled-components": "^5.1.14",
     "babel-loader": "^8.2.2",

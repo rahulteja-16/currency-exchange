@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+// eslint-disable-next-line import/named
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Exchange } from '../../types'
 
 interface ExchangeType {
@@ -22,6 +23,7 @@ export const exchangeSlice = createSlice({
 					selectedToAmount: 0,
 					selectedToCurrency: 'USD',
 					showAdd: true,
+					index: 0,
 				},
 			]
 		},
@@ -33,12 +35,19 @@ export const exchangeSlice = createSlice({
 				selectedToAmount: 0,
 				selectedToCurrency: 'USD',
 				showAdd: true,
+				index: state.exchanges.length,
 			}
 			state.exchanges.push(obj)
+		},
+
+		updateExchange: (state, action: PayloadAction<Exchange>) => {
+			const { index } = action.payload
+			state.exchanges[index] = action.payload
 		},
 	},
 })
 
-export const { initialExchange, addExchange } = exchangeSlice.actions
+export const { initialExchange, addExchange, updateExchange } =
+	exchangeSlice.actions
 
 export default exchangeSlice.reducer

@@ -16,16 +16,10 @@ export interface Exchange {
 	selectedToCurrency: string
 	selectedToAmount: number
 	showAdd: boolean
+	index: number
 }
 
-export interface Store {
-	date: string
-	countries: Country[]
-	rates: Record<string, never>
-	exchanges: Exchange[]
-	status: Status
-}
-
-export interface Action {
-	[extraProps: string]: any
+export interface RateItem {
+	currency: string
+	amount: number
 }
