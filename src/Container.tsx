@@ -48,6 +48,8 @@ const Container = () => {
 	const exchangeArr = useSelector(
 		(state: RootState) => state.exchanges.exchanges
 	)
+	const countries = useSelector((state: RootState) => state.countries)
+	const { countriesArr } = countries
 	const date = useSelector((state: RootState) => state.date.date)
 	const headers = useMemo(
 		(): ReqHeaders => ({
@@ -60,8 +62,8 @@ const Container = () => {
 		[]
 	)
 
-	// const rateHeaders = { ...headers };
-	// rateHeaders.url = API.RATES_URL;
+	const rateHeaders = { ...headers }
+	rateHeaders.url = API.RATES_URL
 
 	const dispatch = useDispatch()
 	useEffect(() => {
@@ -83,7 +85,13 @@ const Container = () => {
 				{exchangeArr && exchangeArr.length > 0 && (
 					<>
 						{exchangeArr.map((item: Exchange) => {
-							return <CurrencyItem key={item.id} />
+							return (
+								<CurrencyItem
+									countriesArr={countriesArr}
+									exchangeItem={item}
+									key={item.id}
+								/>
+							)
 						})}
 						<ButtonPosition>
 							<Button onBtnClick={onButtonPress}>
