@@ -14,9 +14,10 @@ const CurrencyConverter = () => {
 	}, [])
 
 	const transition = useTransition(isLoading, {
-		from: { x: 0, y: 800, opacity: 0, delay: 1000 },
-		enter: { x: 0, y: 0, opacity: 1, delay: 1000 },
-		leave: { x: 0, y: 800, opacity: 0, delay: 1000 },
+		config: { mass: 1, tension: 100, friction: 18 },
+		from: { x: 0, y: 800, opacity: 0, delay: 600 },
+		enter: { x: 0, y: 0, opacity: 1, delay: 600 },
+		leave: { x: 0, y: 800, opacity: 0, delay: 600 },
 	})
 
 	return (
