@@ -45,6 +45,7 @@ const ButtonText = styled.span`
 `
 
 const Container = () => {
+	const dispatch = useDispatch()
 	const exchangeArr = useSelector(
 		(state: RootState) => state.exchanges.exchanges
 	)
@@ -62,7 +63,7 @@ const Container = () => {
 		}),
 		[]
 	)
-	const dispatch = useDispatch()
+
 	useEffect(() => {
 		dispatch(getCountries(headers))
 		dispatch(setDate())
