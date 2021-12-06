@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { Exchange, ReqHeaders } from './types'
+import { Exchange, ReqHeaders, RequestTypes } from './types'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -13,9 +13,14 @@ import { API, StaticText } from './constants'
 import CurrencyItem from './components/CurrencyItem'
 
 import { getCountries, getRates } from './redux/slices/countriesSlice'
-import { setDate, updateDate } from './redux/slices/dateSlice'
-import { addExchange, initialExchange } from './redux/slices/exchangeSlice'
+import {
+	addExchange,
+	initialExchange,
+	setDate,
+	updateDate,
+} from './redux/slices/exchangeSlice'
 import { RootState } from './redux/store'
+import { getHeaders } from './helpers/fetchApi'
 
 const Button = React.lazy(() => import('shared/Button'))
 const DatePicker = React.lazy(() => import('shared/DatePicker'))
@@ -46,20 +51,16 @@ const ButtonText = styled.span`
 
 const Container = () => {
 	const dispatch = useDispatch()
-	const exchangeArr = useSelector(
-		(state: RootState) => state.exchanges.exchanges
-	)
+	const exchangeState = useSelector((state: RootState) => state.exchanges)
+	const { date, exchangeInstance: exchangeArr } = exchangeState
 	const countries = useSelector((state: RootState) => state.countries)
 	const { countriesArr, symbols, rates } = countries
-	const date = useSelector((state: RootState) => state.date.date)
 
 	const headers = useMemo(
 		(): ReqHeaders => ({
 			url: API.COUNTRIES_URL,
-			method: 'GET',
-			headers: {
-				Authorization: `ApiKey ${API.KEY}`,
-			},
+			method: RequestTypes.GET,
+			headers: getHeaders(),
 		}),
 		[]
 	)

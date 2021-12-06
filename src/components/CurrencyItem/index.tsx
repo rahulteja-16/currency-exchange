@@ -3,23 +3,17 @@ import { useDispatch } from 'react-redux'
 import { StaticText } from '../../constants'
 import { getConvertedAmount } from '../../helpers/conversion'
 import { updateExchange } from '../../redux/slices/exchangeSlice'
-import { Country, Exchange, RateItem } from '../../types'
+import {
+	CurrencyItemProps,
+	Exchange,
+	InputTypes,
+	SwitchStatus,
+} from '../../types'
 import Switch from '../Switch'
 import { InputWrapper, ItemWrapper, SectionWrapper } from './styles'
 
 // eslint-disable-next-line import/no-unresolved
 const DropDown = React.lazy(() => import('shared/DropDown'))
-
-declare interface CurrencyItemProps {
-	countriesArr: Country[]
-	exchangeItem: Exchange
-	rates: RateItem[]
-}
-
-enum SwitchStatus {
-	FROM,
-	TO,
-}
 
 const CurrencyItem = ({
 	countriesArr,
@@ -35,11 +29,13 @@ const CurrencyItem = ({
 	)
 
 	const updateAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const obj: Exchange = getConvertedAmount(rates, {
-			...exchangeItem,
-			selectedFromAmount: +e.target.value,
-		})
-		dispatch(updateExchange(obj))
+		if (e.target.value.length <= 10) {
+			const obj: Exchange = getConvertedAmount(rates, {
+				...exchangeItem,
+				selectedFromAmount: +e.target.value,
+			})
+			dispatch(updateExchange(obj))
+		}
 	}
 
 	const updateCountry = (
@@ -74,13 +70,17 @@ const CurrencyItem = ({
 						selectedValue={exchangeItem.selectedFromCurrency}
 						items={toCountries}
 						keyValue={exchangeItem.selectedFromCurrency}
-						label="From"
+						label={StaticText.FROM_LABEL}
 						defaultText={StaticText.DD_DEFAULT}
 					/>
 					<InputWrapper
-						type="number"
+						type={InputTypes.NUMBER}
 						min="0"
-						value={exchangeItem.selectedFromAmount}
+						value={
+							exchangeItem.selectedFromAmount === 0
+								? ''
+								: exchangeItem.selectedFromAmount
+						}
 						onChange={updateAmount}
 					/>
 				</ItemWrapper>
@@ -93,13 +93,18 @@ const CurrencyItem = ({
 						selectedValue={exchangeItem.selectedToCurrency}
 						items={fromCountries}
 						keyValue={exchangeItem.selectedFromCurrency}
-						label="To"
+						label={StaticText.TO_LABEL}
 						defaultText={StaticText.DD_DEFAULT}
 					/>
 					<InputWrapper
-						type="number"
+						inputMode="numeric"
+						type={InputTypes.NUMBER}
 						min="0"
-						value={exchangeItem.selectedToAmount}
+						value={
+							exchangeItem.selectedToAmount === 0
+								? ''
+								: exchangeItem.selectedToAmount
+						}
 						onChange={updateAmount}
 						disabled
 					/>
