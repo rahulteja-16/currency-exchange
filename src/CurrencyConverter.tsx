@@ -4,12 +4,13 @@ import Container from './Container'
 import { useTransition, animated } from 'react-spring'
 
 const GlobalStyles = React.lazy(() => import('shared/GlobalStyles'))
+const Navigation = React.lazy(() => import('shared/Navigation'))
 
 const CurrencyConverter = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	useEffect(() => {
 		// for development
-		// document.body.dataset.theme = 'light'
+		document.body.dataset.theme = 'dark'
 		setIsLoading(false)
 	}, [])
 
@@ -26,6 +27,7 @@ const CurrencyConverter = () => {
 				!item ? (
 					<animated.div style={style}>
 						<GlobalStyles />
+						<Navigation title="Rahul Teja" />
 						<Container />
 					</animated.div>
 				) : (
