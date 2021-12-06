@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Exchange } from '../../types'
 
 interface ExchangeType {
-	exchanges: Exchange[]
+	exchangeInstance: Exchange[]
+	date: string
 }
 
 const initialState: ExchangeType = {
-	exchanges: [],
+	exchangeInstance: [],
+	date: '',
 }
 
 export const exchangeSlice = createSlice({
@@ -15,7 +17,7 @@ export const exchangeSlice = createSlice({
 	initialState,
 	reducers: {
 		initialExchange: (state) => {
-			state.exchanges = [
+			state.exchangeInstance = [
 				{
 					id: 'INR-USD-0',
 					selectedFromCurrency: 'INR',
@@ -29,25 +31,38 @@ export const exchangeSlice = createSlice({
 		},
 		addExchange: (state) => {
 			const obj = {
-				id: `INR-USD-${state.exchanges.length}`,
+				id: `INR-USD-${state.exchangeInstance.length}`,
 				selectedFromCurrency: 'INR',
 				selectedFromAmount: 0,
 				selectedToAmount: 0,
 				selectedToCurrency: 'USD',
 				showAdd: true,
-				index: state.exchanges.length,
+				index: state.exchangeInstance.length,
 			}
-			state.exchanges.push(obj)
+			state.exchangeInstance.push(obj)
 		},
 
 		updateExchange: (state, action: PayloadAction<Exchange>) => {
 			const { index } = action.payload
-			state.exchanges[index] = action.payload
+			state.exchangeInstance[index] = action.payload
+		},
+
+		setDate: (state) => {
+			state.date = new Date().toISOString().split('T')[0]
+		},
+
+		updateDate: (state, action: PayloadAction<string>) => {
+			state.date = action.payload
 		},
 	},
 })
 
-export const { initialExchange, addExchange, updateExchange } =
-	exchangeSlice.actions
+export const {
+	initialExchange,
+	addExchange,
+	updateExchange,
+	setDate,
+	updateDate,
+} = exchangeSlice.actions
 
 export default exchangeSlice.reducer

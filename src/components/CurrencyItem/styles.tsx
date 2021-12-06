@@ -28,4 +28,9 @@ export const InputWrapper = styled.input`
 		outline: thin dotted;
 		color: var(--blue-20);
 	}
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 `

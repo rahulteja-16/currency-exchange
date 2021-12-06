@@ -9,3 +9,8 @@ export interface ReqHeaders {
 	url: string
 	[name: string]: any
 }
+
+export enum RequestTypes {
+	GET = 'get',
+	POST = 'post',
+}
