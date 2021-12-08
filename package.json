@@ -1,7 +1,7 @@
 {
   "name": "currency-exchange",
   "version": "1.0.0",
-  "description": "Currency exchange Application with React + TS + Webpack 5",
+  "description": "Currency exchange App",
   "main": "index.js",
   "scripts": {
     "start": "webpack server --config webpack/webpack.config.js --env env=dev",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rahulteja-dev/react-ts-template.git"
+    "url": "git+https://github.com/rahulteja-dev/currency-exchange.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rahulteja-dev/react-ts-template/issues"
+    "url": "https://github.com/rahulteja-dev/currency-exchange/issues"
   },
-  "homepage": "https://github.com/rahulteja-dev/react-ts-template#readme",
+  "homepage": "https://github.com/rahulteja-dev/currency-exchange#readme",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",

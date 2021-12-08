@@ -51,9 +51,13 @@ const getWPConfig = (env) => {
 				name: 'currency',
 				filename: 'currency.js',
 				remotes: {
+					shell:
+						env === 'dev'
+							? 'shell@http://localhost:3001/shell.js'
+							: 'shell@https://shell.rahulteja.dev/shell.js',
 					shared:
 						env === 'dev'
-							? 'shared@http://localhost:3004/shared.js'
+							? 'shared@http://localhost:3000/shared.js'
 							: 'shared@https://shared.rahulteja.dev/shared.js',
 				},
 				exposes: {
