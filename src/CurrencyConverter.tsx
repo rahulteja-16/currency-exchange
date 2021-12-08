@@ -27,7 +27,7 @@ const CurrencyConverter = () => {
 				!item ? (
 					<animated.div style={style}>
 						<GlobalStyles />
-						<Navigation title="Rahul Teja" />
+						<Navigation />
 						<Container />
 					</animated.div>
 				) : (
