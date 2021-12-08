@@ -1,4 +1,4 @@
-import { Status } from './api'
+import { DeviceTypes, Status } from './variables'
 export interface Country {
 	id: number
 	code: string
@@ -22,4 +22,16 @@ export interface Exchange {
 export interface RateItem {
 	currency: string
 	amount: number
+}
+
+export interface MetaType {
+	deviceType: DeviceTypes
+	isLoading: boolean
+	isError: boolean
+	errorMessage: string | ''
+}
+
+export interface ErrorObjType {
+	message: string | ''
+	status: boolean
 }

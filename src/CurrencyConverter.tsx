@@ -2,17 +2,20 @@
 import React, { useEffect, useState } from 'react'
 import Container from './Container'
 import { useTransition, animated } from 'react-spring'
-
-const GlobalStyles = React.lazy(() => import('shared/GlobalStyles'))
-const Navigation = React.lazy(() => import('shared/Navigation'))
+import { useDeviceType } from 'shell/useDeviceType'
+import { Wrapper } from 'shell/Wrapper'
 
 const CurrencyConverter = () => {
 	const [isLoading, setIsLoading] = useState(true)
+	const device = useDeviceType()
+
 	useEffect(() => {
-		// for development
-		document.body.dataset.theme = 'dark'
 		setIsLoading(false)
 	}, [])
+
+	useEffect(() => {
+		console.log(device)
+	}, [device])
 
 	const transition = useTransition(isLoading, {
 		config: { mass: 1, tension: 100, friction: 18 },
@@ -26,9 +29,9 @@ const CurrencyConverter = () => {
 			{transition((style, item) =>
 				!item ? (
 					<animated.div style={style}>
-						<GlobalStyles />
-						<Navigation title="Rahul Teja" />
-						<Container />
+						<Wrapper>
+							<Container />
+						</Wrapper>
 					</animated.div>
 				) : (
 					''
