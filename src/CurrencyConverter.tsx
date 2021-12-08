@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import Container from './Container'
 import { useTransition, animated } from 'react-spring'
 import { useDeviceType } from 'shell/useDeviceType'
-import { Wrapper } from 'shell/Wrapper'
+
+const Wrapper = React.lazy(() => import('shell/Wrapper'))
 
 const CurrencyConverter = () => {
 	const [isLoading, setIsLoading] = useState(true)
