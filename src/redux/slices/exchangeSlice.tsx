@@ -5,11 +5,13 @@ import { Exchange } from '../../types'
 interface ExchangeType {
 	exchangeInstance: Exchange[]
 	date: string
+	showAdd: boolean
 }
 
 const initialState: ExchangeType = {
 	exchangeInstance: [],
 	date: '',
+	showAdd: true,
 }
 
 export const exchangeSlice = createSlice({
@@ -24,22 +26,23 @@ export const exchangeSlice = createSlice({
 					selectedFromAmount: 0,
 					selectedToAmount: 0,
 					selectedToCurrency: 'USD',
-					showAdd: true,
 					index: 0,
 				},
 			]
 		},
 		addExchange: (state) => {
-			const obj = {
+			const obj: Exchange = {
 				id: `INR-USD-${state.exchangeInstance.length}`,
 				selectedFromCurrency: 'INR',
 				selectedFromAmount: 0,
 				selectedToAmount: 0,
 				selectedToCurrency: 'USD',
-				showAdd: true,
 				index: state.exchangeInstance.length,
 			}
 			state.exchangeInstance.push(obj)
+			if (state.exchangeInstance.length === 5) {
+				state.showAdd = false
+			}
 		},
 
 		updateExchange: (state, action: PayloadAction<Exchange>) => {

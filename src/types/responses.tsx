@@ -15,7 +15,6 @@ export interface Exchange {
 	selectedFromAmount: number
 	selectedToCurrency: string
 	selectedToAmount: number
-	showAdd: boolean
 	index: number
 }
 

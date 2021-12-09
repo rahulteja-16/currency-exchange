@@ -1,13 +1,4 @@
-import styled, { keyframes } from 'styled-components'
-
-const spin = keyframes`
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg); 
-    }
-`
+import styled from 'styled-components'
 
 export const Exchange = styled.div`
 	height: 65px;
@@ -27,10 +18,6 @@ export const ExchangeButton = styled.div`
 	top: 12px;
 	bottom: 12px;
 	background-color: var(--bg-blue);
-	&:hover {
-		box-shadow: 0px 0px 1px 1px var(--bg-blue);
-		animation: ${spin} 1s ease-in 0s 1 normal;
-	}
 `
 
 export const Button = styled.button`
@@ -40,6 +27,7 @@ export const Button = styled.button`
 	margin-left: 10px;
 	margin-top: 9px;
 	width: 25px;
+	cursor: pointer;
 `
 
 export const Icon = styled.div`
@@ -49,4 +37,5 @@ export const Icon = styled.div`
 	bottom: 14px;
 	right: 14px;
 	color: var(--blue-base);
+	cursor: pointer;
 `

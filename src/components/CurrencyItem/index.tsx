@@ -59,6 +59,28 @@ const CurrencyItem = ({
 		}
 	}
 
+	const onSwitchHandler = () => {
+		const {
+			index,
+			id,
+			selectedToCurrency,
+			selectedFromCurrency,
+			selectedFromAmount,
+			selectedToAmount,
+		} = { ...exchangeItem }
+
+		dispatch(
+			updateExchange({
+				selectedFromCurrency: selectedToCurrency,
+				selectedFromAmount: selectedToAmount,
+				selectedToAmount: selectedFromAmount,
+				selectedToCurrency: selectedFromCurrency,
+				index,
+				id,
+			})
+		)
+	}
+
 	return (
 		<React.Suspense fallback="Loading...">
 			<SectionWrapper>
@@ -84,7 +106,7 @@ const CurrencyItem = ({
 						onChange={updateAmount}
 					/>
 				</ItemWrapper>
-				<Switch />
+				<Switch onSwitch={onSwitchHandler} />
 				<ItemWrapper>
 					<DropDown
 						onSelect={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -98,12 +120,18 @@ const CurrencyItem = ({
 					/>
 					<InputWrapper
 						inputMode="numeric"
-						type={InputTypes.NUMBER}
+						type={InputTypes.TEXT}
 						min="0"
 						value={
 							exchangeItem.selectedToAmount === 0
 								? ''
-								: exchangeItem.selectedToAmount
+								: exchangeItem.selectedToAmount.toLocaleString(
+										'en-US',
+										{
+											style: 'currency',
+											currency: exchangeItem.selectedToCurrency,
+										}
+								  )
 						}
 						onChange={updateAmount}
 						disabled

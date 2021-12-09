@@ -30,7 +30,10 @@ const CurrencyConverter = () => {
 			{transition((style, item) =>
 				!item ? (
 					<animated.div style={style}>
-						<Wrapper>
+						<Wrapper
+							showGitHub={true}
+							gitHubLink="https://github.com/rahulteja-dev/currency-exchange"
+						>
 							<Container />
 						</Wrapper>
 					</animated.div>
