@@ -26,10 +26,7 @@ export const getCountries = createAsyncThunk(
 				const obj: Country = {
 					active: item.active,
 					code: item.code,
-					name: `${item.name.substr(
-						0,
-						item.name.lastIndexOf(' ')
-					)} - ${item.name.substr(item.name.lastIndexOf(' '))}`,
+					name: item.name,
 					id: parseInt(item.numeric_code),
 				}
 				countriesArr.push(obj)

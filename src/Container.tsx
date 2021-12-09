@@ -24,6 +24,7 @@ import { getHeaders } from './helpers/fetchApi'
 
 const Button = React.lazy(() => import('shared/Button'))
 const DatePicker = React.lazy(() => import('shared/DatePicker'))
+const Boop = React.lazy(() => import('shared/Boop'))
 
 const PositionWrapper = styled.div`
 	margin: 0 auto;
@@ -52,7 +53,7 @@ const ButtonText = styled.span`
 const Container = () => {
 	const dispatch = useDispatch()
 	const exchangeState = useSelector((state: RootState) => state.exchanges)
-	const { date, exchangeInstance: exchangeArr } = exchangeState
+	const { date, exchangeInstance: exchangeArr, showAdd } = exchangeState
 	const countries = useSelector((state: RootState) => state.countries)
 	const { countriesArr, symbols, rates } = countries
 
@@ -104,14 +105,18 @@ const Container = () => {
 								/>
 							)
 						})}
-						<ButtonPosition>
-							<Button onBtnClick={onButtonPress}>
-								<ButtonItem>
-									<FontAwesomeIcon icon={faPlus} />
-									<ButtonText>Add</ButtonText>
-								</ButtonItem>
-							</Button>
-						</ButtonPosition>
+						{showAdd && (
+							<ButtonPosition>
+								<Boop rotation={6} timing={50}>
+									<Button onBtnClick={onButtonPress}>
+										<ButtonItem>
+											<FontAwesomeIcon icon={faPlus} />
+											<ButtonText>Add</ButtonText>
+										</ButtonItem>
+									</Button>
+								</Boop>
+							</ButtonPosition>
+						)}
 					</>
 				)}
 				{exchangeArr && exchangeArr.length === 0 && <div>Loading...</div>}
