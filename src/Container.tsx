@@ -17,13 +17,13 @@ import {
 	addExchange,
 	initialExchange,
 	setDate,
-	updateDate,
+	// updateDate,
 } from './redux/slices/exchangeSlice'
 import { RootState } from './redux/store'
 import { getHeaders } from './helpers/fetchApi'
 
 const Button = React.lazy(() => import('shared/Button'))
-const DatePicker = React.lazy(() => import('shared/DatePicker'))
+// const DatePicker = React.lazy(() => import('shared/DatePicker'))
 const Boop = React.lazy(() => import('shared/Boop'))
 
 const PositionWrapper = styled.div`
@@ -35,15 +35,15 @@ const PositionWrapper = styled.div`
 const ButtonPosition = styled.div`
 	display: flex;
 	flex-flow: row-reverse;
-	margin-right: 16px;
+	margin-right: 9px;
 `
 
 const ButtonItem = styled.div`
-	color: var(--text-400);
+	color: var(--orange);
+	font-family: var(--font-sans);
 	cursor: pointer;
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
-	padding: 10px;
 `
 
 const ButtonText = styled.span`
@@ -53,7 +53,7 @@ const ButtonText = styled.span`
 const Container = () => {
 	const dispatch = useDispatch()
 	const exchangeState = useSelector((state: RootState) => state.exchanges)
-	const { date, exchangeInstance: exchangeArr, showAdd } = exchangeState
+	const { exchangeInstance: exchangeArr, showAdd } = exchangeState
 	const countries = useSelector((state: RootState) => state.countries)
 	const { countriesArr, symbols, rates } = countries
 
@@ -83,9 +83,9 @@ const Container = () => {
 		}
 	}, [dispatch, headers, symbols])
 
-	const onUpdateDate = (e: React.FormEvent<HTMLInputElement>) => {
-		dispatch(updateDate(e.currentTarget.value))
-	}
+	// const onUpdateDate = (e: React.FormEvent<HTMLInputElement>) => {
+	// 	dispatch(updateDate(e.currentTarget.value))
+	// }
 
 	const onButtonPress = () => dispatch(addExchange())
 
@@ -94,7 +94,7 @@ const Container = () => {
 			<PositionWrapper>
 				{exchangeArr && exchangeArr.length > 0 && (
 					<>
-						<DatePicker date={date} onUpdateDate={onUpdateDate} />
+						{/* <DatePicker date={date} onUpdateDate={onUpdateDate} /> */}
 						{exchangeArr.map((item: Exchange) => {
 							return (
 								<CurrencyItem
