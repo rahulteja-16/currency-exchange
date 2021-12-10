@@ -2,12 +2,12 @@ import styled from 'styled-components'
 
 export const SectionWrapper = styled.section`
 	display: flex;
-	border: 1px solid var(--blue-40);
+	border: 1px solid var(--gray-400);
 	justify-content: space-between;
 	padding: 20px;
 	margin: 10px 10px 20px 10px;
 	border-radius: var(--border-radius);
-	background-color: var(--bg-blue);
+	background-color: transparent;
 `
 export const ItemWrapper = styled.div`
 	display: flex;
@@ -21,12 +21,12 @@ export const InputWrapper = styled.input`
 	border: none;
 	padding-left: 4px;
 	font-size: 18px;
-	border-bottom: 1px solid var(--blue-40);
-	background-color: var(--bg-blue);
-	color: var(--text-200);
+	border-bottom: 1px solid var(--gray-300);
+	background-color: transparent;
+	color: var(--gray-200);
 	&:focus {
 		outline: thin dotted;
-		color: var(--blue-20);
+		color: var(--gray-200);
 	}
 	&::-webkit-outer-spin-button,
 	&::-webkit-inner-spin-button {
