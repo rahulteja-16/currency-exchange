@@ -4,7 +4,7 @@ import Container from './Container'
 import { useTransition, animated } from 'react-spring'
 import { useDeviceType } from 'shell/useDeviceType'
 
-const Wrapper = React.lazy(() => import('shell/Wrapper'))
+const ShellHolder = React.lazy(() => import('shell/Holder'))
 
 const CurrencyConverter = () => {
 	const [isLoading, setIsLoading] = useState(true)
@@ -30,9 +30,9 @@ const CurrencyConverter = () => {
 			{transition((style, item) =>
 				!item ? (
 					<animated.div style={style}>
-						<Wrapper label="Currency Exchange">
+						<ShellHolder label="Currency Exchange">
 							<Container />
-						</Wrapper>
+						</ShellHolder>
 					</animated.div>
 				) : (
 					''
