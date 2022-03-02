@@ -13,7 +13,7 @@ import Switch from '../Switch'
 import { InputWrapper, ItemWrapper, SectionWrapper } from './styles'
 
 // eslint-disable-next-line import/no-unresolved
-const DropDown = React.lazy(() => import('shared/DropDown'))
+const DropDown = React.lazy(() => import('componentLibrary/DropDown'))
 
 const CurrencyItem = ({
 	countriesArr,

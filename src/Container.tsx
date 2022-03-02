@@ -22,9 +22,8 @@ import {
 import { RootState } from './redux/store'
 import { getHeaders } from './helpers/fetchApi'
 
-const Button = React.lazy(() => import('shared/Button'))
-// const DatePicker = React.lazy(() => import('shared/DatePicker'))
-const Boop = React.lazy(() => import('shared/Boop'))
+const Button = React.lazy(() => import('componentLibrary/Button'))
+const Boop = React.lazy(() => import('componentLibrary/Boop'))
 
 const PositionWrapper = styled.div`
 	margin: 0 auto;

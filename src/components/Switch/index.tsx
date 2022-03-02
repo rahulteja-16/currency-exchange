@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRandom } from '@fortawesome/free-solid-svg-icons'
 
 // eslint-disable-next-line import/no-unresolved
-const Button = React.lazy(() => import('shared/Button'))
+const Button = React.lazy(() => import('componentLibrary/Button'))
 
 interface SwitchType {
 	onSwitch: () => void

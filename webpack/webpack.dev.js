@@ -6,7 +6,7 @@ module.exports = {
 	devServer: {
 		hot: true,
 		open: true,
-		port: 3002,
+		port: 3003,
 	},
 	devtool: 'cheap-module-source-map',
 	plugins: [
