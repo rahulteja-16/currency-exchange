@@ -66,6 +66,10 @@ const getWPConfig = (env) => {
 						singleton: true,
 						requiredVersion: deps['react-dom'],
 					},
+					'styled-components': {
+						singleton: true,
+						requiredVersion: deps['styled-components'],
+					},
 				},
 			}),
 		],
