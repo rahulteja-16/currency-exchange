@@ -3,8 +3,6 @@ const HTMLWebpackPlugin = require('html-webpack-plugin')
 const ModuleFederationPlugin =
 	require('webpack').container.ModuleFederationPlugin
 const deps = require('../package.json').dependencies
-//
-// const CopyPlugin = require('copy-webpack-plugin')
 
 const getWPConfig = (env) => {
 	return {
@@ -40,7 +38,7 @@ const getWPConfig = (env) => {
 		output: {
 			publicPath:
 				env === 'dev'
-					? 'http://localhost:3002/'
+					? 'http://localhost:3003/'
 					: 'https://currency.rahulteja.dev/',
 		},
 		plugins: [
@@ -51,14 +49,10 @@ const getWPConfig = (env) => {
 				name: 'currency',
 				filename: 'currency.js',
 				remotes: {
-					shell:
+					componentLibrary:
 						env === 'dev'
-							? 'shell@http://localhost:3001/shell.js'
-							: 'shell@https://shell.rahulteja.dev/shell.js',
-					shared:
-						env === 'dev'
-							? 'shared@http://localhost:3000/shared.js'
-							: 'shared@https://shared.rahulteja.dev/shared.js',
+							? 'componentLibrary@http://localhost:3000/componentLibrary.js'
+							: 'componentLibrary@https://library.rahulteja.dev/componentLibrary.js',
 				},
 				exposes: {
 					'./Exchange': './src/Root.tsx',
@@ -78,9 +72,6 @@ const getWPConfig = (env) => {
 					},
 				},
 			}),
-			// new CopyPlugin({
-			// 	patterns: [{ from: '../src', to: '/build' }],
-			// }),
 		],
 		stats: 'errors-only',
 	}

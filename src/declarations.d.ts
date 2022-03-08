@@ -3,5 +3,4 @@ declare module '*.svg' {
 	const content: string
 	export default content
 }
-declare module 'shared/*'
-declare module 'shell/*'
+declare module 'componentLibrary/*'

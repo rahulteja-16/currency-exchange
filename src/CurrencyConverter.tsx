@@ -2,27 +2,19 @@
 import React, { useEffect, useState } from 'react'
 import Container from './Container'
 import { useTransition, animated } from 'react-spring'
-import { useDeviceType } from 'shell/useDeviceType'
-
-const ShellHolder = React.lazy(() => import('shell/Holder'))
 
 const CurrencyConverter = () => {
 	const [isLoading, setIsLoading] = useState(true)
-	const device = useDeviceType()
 
 	useEffect(() => {
 		setIsLoading(false)
 	}, [])
 
-	useEffect(() => {
-		console.log(device)
-	}, [device])
-
 	const transition = useTransition(isLoading, {
-		config: { mass: 1, tension: 100, friction: 18 },
-		from: { x: 0, y: 800, opacity: 0, delay: 600 },
-		enter: { x: 0, y: 0, opacity: 1, delay: 600 },
-		leave: { x: 0, y: 800, opacity: 0, delay: 600 },
+		config: { mass: 1, tension: 80, friction: 18 },
+		from: { x: 0, y: 600, opacity: 0, delay: 450 },
+		enter: { x: 0, y: 0, opacity: 1, delay: 450 },
+		leave: { x: 0, y: 600, opacity: 0, delay: 450 },
 	})
 
 	return (
@@ -30,9 +22,7 @@ const CurrencyConverter = () => {
 			{transition((style, item) =>
 				!item ? (
 					<animated.div style={style}>
-						<ShellHolder label="Currency Exchange">
-							<Container />
-						</ShellHolder>
+						<Container />
 					</animated.div>
 				) : (
 					''
